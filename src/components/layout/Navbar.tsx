@@ -1,6 +1,7 @@
-import { Link, useLocation } from 'react-router-dom';
-import { Building2, UserPlus, ImageUp, Menu, X } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Building2, UserPlus, ImageUp, Menu, X, LogOut } from 'lucide-react';
 import { useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
 
 const navLinks = [
   { name: 'Create Building', path: '/', icon: Building2 },
@@ -10,7 +11,14 @@ const navLinks = [
 
 const Navbar = () => {
   const location = useLocation();
+  const { signOut } = useAuth();
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/login');
+  };
 
   return (
     <nav className="sticky top-0 z-50 bg-card/80 backdrop-blur-md border-b border-border">
@@ -42,6 +50,13 @@ const Navbar = () => {
               </Link>
             );
           })}
+          <button
+            onClick={handleSignOut}
+            className="px-3.5 py-2 rounded-lg text-sm font-medium transition-base flex items-center gap-2 text-muted-foreground hover:text-foreground hover:bg-secondary/60"
+          >
+            <LogOut className="w-4 h-4" />
+            Sign Out
+          </button>
         </div>
 
         {/* Mobile toggle */}
@@ -75,6 +90,13 @@ const Navbar = () => {
               </Link>
             );
           })}
+          <button
+            onClick={() => { setMobileOpen(false); handleSignOut(); }}
+            className="px-3.5 py-2.5 rounded-lg text-sm font-medium transition-base flex items-center gap-2 w-full text-muted-foreground hover:text-foreground hover:bg-secondary/60"
+          >
+            <LogOut className="w-4 h-4" />
+            Sign Out
+          </button>
         </div>
       )}
     </nav>
