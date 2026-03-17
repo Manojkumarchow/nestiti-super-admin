@@ -90,6 +90,13 @@ const Navbar = () => {
               </Link>
             );
           })}
+          <button
+            onClick={() => { setMobileOpen(false); handleSignOut(); }}
+            className="px-3.5 py-2.5 rounded-lg text-sm font-medium transition-base flex items-center gap-2 w-full text-muted-foreground hover:text-foreground hover:bg-secondary/60"
+          >
+            <LogOut className="w-4 h-4" />
+            Sign Out
+          </button>
         </div>
       )}
     </nav>
