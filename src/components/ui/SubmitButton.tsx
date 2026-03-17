@@ -24,6 +24,7 @@ export const SubmitButton = React.forwardRef<HTMLButtonElement, SubmitButtonProp
 
   return (
     <button
+      ref={ref}
       {...props}
       disabled={disabled || loading}
       className={`${base} ${variants[variant]} ${fullWidth ? 'w-full' : ''} ${className}`}
@@ -32,4 +33,6 @@ export const SubmitButton = React.forwardRef<HTMLButtonElement, SubmitButtonProp
       {children}
     </button>
   );
-};
+});
+
+SubmitButton.displayName = 'SubmitButton';
