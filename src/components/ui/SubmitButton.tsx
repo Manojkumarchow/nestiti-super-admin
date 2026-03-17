@@ -7,7 +7,7 @@ interface SubmitButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement
   fullWidth?: boolean;
 }
 
-export const SubmitButton: React.FC<SubmitButtonProps> = ({
+export const SubmitButton = React.forwardRef<HTMLButtonElement, SubmitButtonProps>(({
   children,
   loading = false,
   variant = 'primary',
