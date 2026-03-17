@@ -1,6 +1,7 @@
-import { Link, useLocation } from 'react-router-dom';
-import { Building2, UserPlus, ImageUp, Menu, X } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Building2, UserPlus, ImageUp, Menu, X, LogOut } from 'lucide-react';
 import { useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
 
 const navLinks = [
   { name: 'Create Building', path: '/', icon: Building2 },
