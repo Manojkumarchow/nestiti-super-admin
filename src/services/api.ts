@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000',
+  baseURL: 'http://13.63.188.62:8080/whistleup',
   headers: {
     'Content-Type': 'application/json',
   },

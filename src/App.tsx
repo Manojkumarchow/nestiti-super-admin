@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/contexts/AuthContext";
-import ProtectedRoute from "@/components/ProtectedRoute";
 import Navbar from "@/components/layout/Navbar";
 import CreateBuilding from "./pages/CreateBuilding";
 import CreateProfile from "./pages/CreateProfile";
@@ -28,9 +27,30 @@ const App = () => (
         <AuthProvider>
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/" element={<ProtectedRoute><AppLayout><CreateBuilding /></AppLayout></ProtectedRoute>} />
-            <Route path="/profile" element={<ProtectedRoute><AppLayout><CreateProfile /></AppLayout></ProtectedRoute>} />
-            <Route path="/upload" element={<ProtectedRoute><AppLayout><ImageUploadPage /></AppLayout></ProtectedRoute>} />
+            <Route
+              path="/"
+              element={
+                <AppLayout>
+                  <CreateBuilding />
+                </AppLayout>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <AppLayout>
+                  <CreateProfile />
+                </AppLayout>
+              }
+            />
+            <Route
+              path="/upload"
+              element={
+                <AppLayout>
+                  <ImageUploadPage />
+                </AppLayout>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>

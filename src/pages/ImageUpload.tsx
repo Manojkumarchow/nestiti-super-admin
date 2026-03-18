@@ -1,31 +1,31 @@
-import { useState, useRef } from 'react';
-import { toast } from 'sonner';
-import { Upload, X, ImageIcon } from 'lucide-react';
-import API from '@/services/api';
-import { FormSelect } from '@/components/ui/FormSelect';
-import { FormCard } from '@/components/ui/FormCard';
-import { SubmitButton } from '@/components/ui/SubmitButton';
+import { useState, useRef } from "react";
+import { toast } from "sonner";
+import { Upload, X, ImageIcon } from "lucide-react";
+import API from "@/services/api";
+import { FormSelect } from "@/components/ui/FormSelect";
+import { FormCard } from "@/components/ui/FormCard";
+import { SubmitButton } from "@/components/ui/SubmitButton";
 
 const cityOptions = [
-  { value: 'Hyderabad', label: 'Hyderabad' },
-  { value: 'Khammam', label: 'Khammam' },
+  { value: "Hyderabad", label: "Hyderabad" },
+  { value: "Khammam", label: "Khammam" },
 ];
 
 const ImageUploadPage = () => {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const [city, setCity] = useState('Hyderabad');
+  const [city, setCity] = useState("Hyderabad");
   const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFile = (selected: File | null) => {
     if (!selected) return;
-    if (!selected.type.startsWith('image/')) {
-      toast.error('Please select an image file');
+    if (!selected.type.startsWith("image/")) {
+      toast.error("Please select an image file");
       return;
     }
     if (selected.size > 10 * 1024 * 1024) {
-      toast.error('File must be under 10MB');
+      toast.error("File must be under 10MB");
       return;
     }
     setFile(selected);
@@ -37,24 +37,24 @@ const ImageUploadPage = () => {
   const clearFile = () => {
     setFile(null);
     setPreview(null);
-    if (inputRef.current) inputRef.current.value = '';
+    if (inputRef.current) inputRef.current.value = "";
   };
 
   const handleUpload = async () => {
     if (!file) return;
     setLoading(true);
     const formData = new FormData();
-    formData.append('image', file);
-    formData.append('city', city);
+    formData.append("image", file);
+    formData.append("city", city);
 
     try {
-      await API.post('/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+      await API.post("/ad/register", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
-      toast.success('Image uploaded successfully!');
+      toast.success("Image uploaded successfully!");
       clearFile();
     } catch (err: any) {
-      toast.error(err?.response?.data?.message || 'Upload failed');
+      toast.error(err?.response?.data?.message || "Upload failed");
     } finally {
       setLoading(false);
     }
@@ -63,8 +63,12 @@ const ImageUploadPage = () => {
   return (
     <div className="max-w-2xl mx-auto py-8 sm:py-12 px-4 sm:px-6">
       <header className="mb-8 sm:mb-10">
-        <h1 className="text-2xl sm:text-3xl font-semibold text-foreground tracking-tight">Upload Image</h1>
-        <p className="text-muted-foreground mt-1.5">Upload building photos or assets.</p>
+        <h1 className="text-2xl sm:text-3xl font-semibold text-foreground tracking-tight">
+          Upload Image
+        </h1>
+        <p className="text-muted-foreground mt-1.5">
+          Upload building photos or assets.
+        </p>
       </header>
 
       <FormCard title="Asset Upload">
@@ -82,10 +86,17 @@ const ImageUploadPage = () => {
           >
             {preview ? (
               <div className="relative">
-                <img src={preview} alt="Preview" className="max-h-64 rounded-lg shadow-sm" />
+                <img
+                  src={preview}
+                  alt="Preview"
+                  className="max-h-64 rounded-lg shadow-sm"
+                />
                 <button
                   type="button"
-                  onClick={(e) => { e.stopPropagation(); clearFile(); }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    clearFile();
+                  }}
                   className="absolute -top-2 -right-2 w-6 h-6 bg-destructive text-destructive-foreground rounded-full flex items-center justify-center shadow-md hover:bg-destructive/90 transition-base"
                 >
                   <X className="w-3.5 h-3.5" />
@@ -94,8 +105,12 @@ const ImageUploadPage = () => {
             ) : (
               <div className="text-center">
                 <ImageIcon className="w-10 h-10 text-muted-foreground/40 mx-auto mb-3" />
-                <p className="text-sm text-muted-foreground">Click to upload building photo</p>
-                <p className="text-xs text-muted-foreground/60 mt-1">PNG, JPG up to 10MB</p>
+                <p className="text-sm text-muted-foreground">
+                  Click to upload building photo
+                </p>
+                <p className="text-xs text-muted-foreground/60 mt-1">
+                  PNG, JPG up to 10MB
+                </p>
               </div>
             )}
             <input
