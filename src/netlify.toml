@@ -1,9 +1,3 @@
-[[redirects]]
-  from = "/whistleup/*"
-  to = "http://13.63.188.62:8080/whistleup/:splat"
-  status = 200
-  force = true
-
 [build]
   command = "npm run build"
   publish = "dist"
