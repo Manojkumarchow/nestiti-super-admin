@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: '/api/whistleup',
+  baseURL: '/whistleup',
   headers: {
     'Content-Type': 'application/json',
   },
