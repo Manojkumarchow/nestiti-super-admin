@@ -46,10 +46,10 @@ const Login = () => {
             <Building2 className="w-6 h-6 text-primary-foreground" />
           </div>
           <h1 className="text-2xl font-semibold text-foreground tracking-tight">
-            CeramicBMS
+            Nestiti
           </h1>
           <p className="text-muted-foreground text-sm mt-1">
-            Building Management System
+            Super Admin Portal
           </p>
         </div>
 
