@@ -4,3 +4,9 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+[[redirects]]
+  from = "/whistleup/*"
+  to = "http://13.63.188.62:8080/:splat"
+  status = 200
+  force = true
