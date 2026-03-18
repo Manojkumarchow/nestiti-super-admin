@@ -25,9 +25,9 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-xs">BM</span>
+            <span className="text-primary-foreground font-bold text-xs">Nestiti</span>
           </div>
-          <span className="font-semibold text-foreground tracking-tight">CeramicBMS</span>
+          <span className="font-semibold text-foreground tracking-tight">Nestiti Super Admin</span>
         </div>
 
         {/* Desktop nav */}
