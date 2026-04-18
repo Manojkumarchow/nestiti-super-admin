@@ -9,6 +9,11 @@ import CreateProfile from "./pages/CreateProfile";
 import ImageUploadPage from "./pages/ImageUpload";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
+import ServiceOrdersPage from "./pages/ServiceOrders";
+import ComplaintsPage from "./pages/Complaints";
+import NotificationsPage from "./pages/Notifications";
+import UsersPage from "./pages/Users";
+import BuildingsPage from "./pages/Buildings";
 
 const queryClient = new QueryClient();
 
@@ -89,6 +94,56 @@ const App = () => (
                 <RequireAuth>
                   <AppLayout>
                     <ImageUploadPage />
+                  </AppLayout>
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/service-orders"
+              element={
+                <RequireAuth>
+                  <AppLayout>
+                    <ServiceOrdersPage />
+                  </AppLayout>
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/complaints"
+              element={
+                <RequireAuth>
+                  <AppLayout>
+                    <ComplaintsPage />
+                  </AppLayout>
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/notifications"
+              element={
+                <RequireAuth>
+                  <AppLayout>
+                    <NotificationsPage />
+                  </AppLayout>
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/users"
+              element={
+                <RequireAuth>
+                  <AppLayout>
+                    <UsersPage />
+                  </AppLayout>
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/buildings"
+              element={
+                <RequireAuth>
+                  <AppLayout>
+                    <BuildingsPage />
                   </AppLayout>
                 </RequireAuth>
               }

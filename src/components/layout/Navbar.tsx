@@ -1,5 +1,17 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Building2, UserPlus, ImageUp, Menu, X, LogOut } from 'lucide-react';
+import {
+  Building2,
+  UserPlus,
+  ImageUp,
+  Menu,
+  X,
+  LogOut,
+  BookOpenCheck,
+  MessageSquareWarning,
+  BellRing,
+  Users,
+  Building,
+} from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -7,6 +19,11 @@ const navLinks = [
   { name: 'Create Building', path: '/building', icon: Building2 },
   { name: 'Create Profile', path: '/profile', icon: UserPlus },
   { name: 'Upload Image', path: '/upload', icon: ImageUp },
+  { name: 'Bookings', path: '/service-orders', icon: BookOpenCheck },
+  { name: 'Issues', path: '/complaints', icon: MessageSquareWarning },
+  { name: 'Notifications', path: '/notifications', icon: BellRing },
+  { name: 'Users', path: '/users', icon: Users },
+  { name: 'Buildings', path: '/buildings', icon: Building },
 ];
 
 const AUTH_KEY = "super_admin_authenticated";
@@ -24,7 +41,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-card/80 backdrop-blur-md border-b border-border">
+    <nav className="sticky top-0 z-50 bg-card/80 backdrop-blur-md border-b border-border pt-3 sm:pt-6">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
@@ -34,7 +51,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex gap-1">
+        <div className="hidden md:flex gap-1 flex-wrap justify-end">
           {navLinks.map((link) => {
             const Icon = link.icon;
             const active = location.pathname === link.path;
