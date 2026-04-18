@@ -7,6 +7,10 @@ import { FormCard } from "@/components/ui/FormCard";
 import { Building2 } from "lucide-react";
 import API from "@/services/api";
 
+const Alert = {
+  alert: (message: string) => window.alert(message),
+};
+
 const Login = () => {
   const [phone, setPhone] = useState("");
   const [pin, setPin] = useState("");
@@ -16,7 +20,7 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!phone.trim() || !pin.trim()) {
-      toast.error("Please fill in all fields");
+      Alert.alert("Please fill in all fields");
       return;
     }
     setLoading(true);
@@ -29,10 +33,10 @@ const Login = () => {
         toast.success("Welcome back!");
         navigate("/");
       } else {
-        toast.error("Login failed!");
+        Alert.alert("Login failed!");
       }
     } catch (err: any) {
-      toast.error(err.message || "Authentication failed");
+      Alert.alert(err.message || "Authentication failed");
     } finally {
       setLoading(false);
     }

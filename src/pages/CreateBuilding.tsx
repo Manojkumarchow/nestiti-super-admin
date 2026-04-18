@@ -7,6 +7,10 @@ import { FormSelect } from "@/components/ui/FormSelect";
 import { FormCard } from "@/components/ui/FormCard";
 import { SubmitButton } from "@/components/ui/SubmitButton";
 
+const Alert = {
+  alert: (message: string) => window.alert(message),
+};
+
 const cityOptions = [
   { value: "Hyderabad", label: "Hyderabad" },
   { value: "Khammam", label: "Khammam" },
@@ -132,7 +136,7 @@ const CreateBuilding = () => {
       toast.success("Building created successfully!");
       setForm(initialForm);
     } catch (err: any) {
-      toast.error(err?.response?.data?.message || "Failed to create building");
+      Alert.alert(err?.response?.data?.message || "Failed to create building");
     } finally {
       setLoading(false);
     }

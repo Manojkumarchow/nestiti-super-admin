@@ -2,6 +2,10 @@ import { useState, useRef } from "react";
 import { toast } from "sonner";
 import { Upload, X, ImageIcon } from "lucide-react";
 import API from "@/services/api";
+
+const Alert = {
+  alert: (message: string) => window.alert(message),
+};
 import { FormSelect } from "@/components/ui/FormSelect";
 import { FormCard } from "@/components/ui/FormCard";
 import { SubmitButton } from "@/components/ui/SubmitButton";
@@ -21,11 +25,11 @@ const ImageUploadPage = () => {
   const handleFile = (selected: File | null) => {
     if (!selected) return;
     if (!selected.type.startsWith("image/")) {
-      toast.error("Please select an image file");
+      Alert.alert("Please select an image file");
       return;
     }
     if (selected.size > 10 * 1024 * 1024) {
-      toast.error("File must be under 10MB");
+      Alert.alert("File must be under 10MB");
       return;
     }
     setFile(selected);
@@ -54,7 +58,7 @@ const ImageUploadPage = () => {
       toast.success("Image uploaded successfully!");
       clearFile();
     } catch (err: any) {
-      toast.error(err?.response?.data?.message || "Upload failed");
+      Alert.alert(err?.response?.data?.message || "Upload failed");
     } finally {
       setLoading(false);
     }

@@ -2,6 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import API from "@/services/api";
+
+const Alert = {
+  alert: (message: string) => window.alert(message),
+};
 import { FormInput } from "@/components/ui/FormInput";
 import { FormSelect } from "@/components/ui/FormSelect";
 import { FormCard } from "@/components/ui/FormCard";
@@ -66,7 +70,7 @@ const CreateProfile = () => {
       setForm(initialForm);
       // navigate("/upload");
     } catch (err: any) {
-      toast.error(err?.response?.data?.message || "Failed to create profile");
+      Alert.alert(err?.response?.data?.message || "Failed to create profile");
     } finally {
       setLoading(false);
     }
