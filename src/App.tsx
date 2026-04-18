@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -19,6 +19,31 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
+const AUTH_KEY = "super_admin_authenticated";
+
+const isAuthenticated = () => {
+  if (typeof window === "undefined") return false;
+  return localStorage.getItem(AUTH_KEY) === "true";
+};
+
+const RequireAuth = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation();
+
+  if (!isAuthenticated()) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
+
+  return <>{children}</>;
+};
+
+const PublicOnlyRoute = ({ children }: { children: React.ReactNode }) => {
+  if (isAuthenticated()) {
+    return <Navigate to="/building" replace />;
+  }
+
+  return <>{children}</>;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -26,32 +51,56 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route
+              path="/login"
+              element={
+                <PublicOnlyRoute>
+                  <Login />
+                </PublicOnlyRoute>
+              }
+            />
             <Route
               path="/"
+              element={<Navigate to={isAuthenticated() ? "/building" : "/login"} replace />}
+            />
+            <Route
+              path="/building"
               element={
-                <AppLayout>
-                  <CreateBuilding />
-                </AppLayout>
+                <RequireAuth>
+                  <AppLayout>
+                    <CreateBuilding />
+                  </AppLayout>
+                </RequireAuth>
               }
             />
             <Route
               path="/profile"
               element={
-                <AppLayout>
-                  <CreateProfile />
-                </AppLayout>
+                <RequireAuth>
+                  <AppLayout>
+                    <CreateProfile />
+                  </AppLayout>
+                </RequireAuth>
               }
             />
             <Route
               path="/upload"
               element={
-                <AppLayout>
-                  <ImageUploadPage />
-                </AppLayout>
+                <RequireAuth>
+                  <AppLayout>
+                    <ImageUploadPage />
+                  </AppLayout>
+                </RequireAuth>
               }
             />
-            <Route path="*" element={<NotFound />} />
+            <Route
+              path="*"
+              element={
+                <RequireAuth>
+                  <NotFound />
+                </RequireAuth>
+              }
+            />
           </Routes>
         </AuthProvider>
       </BrowserRouter>

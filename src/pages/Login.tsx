@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { FormInput } from "@/components/ui/FormInput";
 import { SubmitButton } from "@/components/ui/SubmitButton";
@@ -11,11 +11,14 @@ const Alert = {
   alert: (message: string) => window.alert(message),
 };
 
+const AUTH_KEY = "super_admin_authenticated";
+
 const Login = () => {
   const [phone, setPhone] = useState("");
   const [pin, setPin] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,8 +33,10 @@ const Login = () => {
         pin: pin,
       });
       if (response.status == 200) {
+        localStorage.setItem(AUTH_KEY, "true");
         toast.success("Welcome back!");
-        navigate("/");
+        const redirectPath = (location.state as { from?: { pathname?: string } })?.from?.pathname || "/building";
+        navigate(redirectPath, { replace: true });
       } else {
         Alert.alert("Login failed!");
       }

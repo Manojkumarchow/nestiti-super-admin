@@ -4,10 +4,12 @@ import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 
 const navLinks = [
-  { name: 'Create Building', path: '/', icon: Building2 },
+  { name: 'Create Building', path: '/building', icon: Building2 },
   { name: 'Create Profile', path: '/profile', icon: UserPlus },
   { name: 'Upload Image', path: '/upload', icon: ImageUp },
 ];
+
+const AUTH_KEY = "super_admin_authenticated";
 
 const Navbar = () => {
   const location = useLocation();
@@ -16,6 +18,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleSignOut = async () => {
+    localStorage.removeItem(AUTH_KEY);
     await signOut();
     navigate('/login');
   };
