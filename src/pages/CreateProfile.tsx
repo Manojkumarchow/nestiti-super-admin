@@ -99,6 +99,8 @@ const CreateProfile = () => {
             />
             <FormInput
               label="Phone Number"
+              maxLength={10}
+              minLength={10}
               required
               value={form.phone}
               onChange={(e) => update("phone", e.target.value)}
