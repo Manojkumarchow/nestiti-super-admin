@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { type FormEvent, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { FormInput } from "@/components/ui/FormInput";
@@ -13,6 +13,18 @@ const Alert = {
 
 const AUTH_KEY = "super_admin_authenticated";
 
+/** Only this number may use the super-admin portal login. */
+const SUPER_ADMIN_PHONE = "9666499643";
+
+function isAllowedSuperAdminPhone(input: string): boolean {
+  const digits = input.replace(/\D/g, "");
+  return (
+    digits === SUPER_ADMIN_PHONE ||
+    digits === `91${SUPER_ADMIN_PHONE}` ||
+    digits === `0${SUPER_ADMIN_PHONE}`
+  );
+}
+
 const Login = () => {
   const [phone, setPhone] = useState("");
   const [pin, setPin] = useState("");
@@ -20,16 +32,20 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!phone.trim() || !pin.trim()) {
       Alert.alert("Please fill in all fields");
       return;
     }
+    if (!isAllowedSuperAdminPhone(phone)) {
+      toast.error("Only super admins are allowed to login");
+      return;
+    }
     setLoading(true);
     try {
       const response = await API.post("/users/login", {
-        phone: phone,
+        phone: SUPER_ADMIN_PHONE,
         pin: pin,
       });
       if (response.status == 200) {

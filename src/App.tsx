@@ -1,5 +1,12 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -43,6 +50,13 @@ const RequireAuth = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
+/** Every route except guest check-in uses this; unauthenticated users are sent to /login. */
+const ProtectedOutlet = () => (
+  <RequireAuth>
+    <Outlet />
+  </RequireAuth>
+);
+
 const PublicOnlyRoute = ({ children }: { children: React.ReactNode }) => {
   if (isAuthenticated()) {
     return <Navigate to="/building" replace />;
@@ -58,6 +72,9 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <Routes>
+            {/* Only these paths skip RequireAuth. /login and / must stay outside so admins can sign in. */}
+            <Route path="/visitor-check-in" element={<VisitorCheckIn />} />
+            <Route path="/visitor-check-in/success" element={<VisitorCheckInSuccess />} />
             <Route
               path="/login"
               element={
@@ -66,100 +83,77 @@ const App = () => (
                 </PublicOnlyRoute>
               }
             />
-            <Route path="/visitor-check-in" element={<VisitorCheckIn />} />
-            <Route path="/visitor-check-in/success" element={<VisitorCheckInSuccess />} />
             <Route
               path="/"
               element={<Navigate to={isAuthenticated() ? "/building" : "/login"} replace />}
             />
-            <Route
-              path="/building"
-              element={
-                <RequireAuth>
+            <Route element={<ProtectedOutlet />}>
+              <Route
+                path="/building"
+                element={
                   <AppLayout>
                     <CreateBuilding />
                   </AppLayout>
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <RequireAuth>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
                   <AppLayout>
                     <CreateProfile />
                   </AppLayout>
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/upload"
-              element={
-                <RequireAuth>
+                }
+              />
+              <Route
+                path="/upload"
+                element={
                   <AppLayout>
                     <ImageUploadPage />
                   </AppLayout>
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/service-orders"
-              element={
-                <RequireAuth>
+                }
+              />
+              <Route
+                path="/service-orders"
+                element={
                   <AppLayout>
                     <ServiceOrdersPage />
                   </AppLayout>
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/complaints"
-              element={
-                <RequireAuth>
+                }
+              />
+              <Route
+                path="/complaints"
+                element={
                   <AppLayout>
                     <ComplaintsPage />
                   </AppLayout>
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/notifications"
-              element={
-                <RequireAuth>
+                }
+              />
+              <Route
+                path="/notifications"
+                element={
                   <AppLayout>
                     <NotificationsPage />
                   </AppLayout>
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/users"
-              element={
-                <RequireAuth>
+                }
+              />
+              <Route
+                path="/users"
+                element={
                   <AppLayout>
                     <UsersPage />
                   </AppLayout>
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/buildings"
-              element={
-                <RequireAuth>
+                }
+              />
+              <Route
+                path="/buildings"
+                element={
                   <AppLayout>
                     <BuildingsPage />
                   </AppLayout>
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="*"
-              element={
-                <RequireAuth>
-                  <NotFound />
-                </RequireAuth>
-              }
-            />
+                }
+              />
+              <Route path="*" element={<NotFound />} />
+            </Route>
           </Routes>
         </AuthProvider>
       </BrowserRouter>
