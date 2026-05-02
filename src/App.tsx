@@ -14,6 +14,8 @@ import ComplaintsPage from "./pages/Complaints";
 import NotificationsPage from "./pages/Notifications";
 import UsersPage from "./pages/Users";
 import BuildingsPage from "./pages/Buildings";
+import VisitorCheckIn from "./pages/VisitorCheckIn";
+import VisitorCheckInSuccess from "./pages/VisitorCheckInSuccess";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +66,8 @@ const App = () => (
                 </PublicOnlyRoute>
               }
             />
+            <Route path="/visitor-check-in" element={<VisitorCheckIn />} />
+            <Route path="/visitor-check-in/success" element={<VisitorCheckInSuccess />} />
             <Route
               path="/"
               element={<Navigate to={isAuthenticated() ? "/building" : "/login"} replace />}
