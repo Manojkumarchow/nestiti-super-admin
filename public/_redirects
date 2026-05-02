@@ -1,1 +1,3 @@
 /whistleup/*  http://13.63.188.62:8080/whistleup/:splat  200
+# SPA: React Router client-side routes (must be last)
+/*  /index.html  200
